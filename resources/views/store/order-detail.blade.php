@@ -42,14 +42,24 @@
 					<span class="label label-success">
 						Total: Bs.{{ number_format($total, 2) }}
 					</span>
-				</h3><hr>
+				</h3>
+				<br>
+				<br>
+				<hr>
 				<p>
-					<a href="{{ route('cart-show') }}" class="btn btn-primary">
+					<a href="{{ route('cart-show') }}" class="btn btn-primary" style="font-weight: bold;font-size: x-small;">
 						<i class="fa fa-chevron-circle-left"></i> Regresar
 					</a>
 
-					<a href="{{ route('payment') }}" class="btn btn-warning">
+					<a href="{{ route('payment') }}" class="btn btn-warning" style="font-weight: bold;font-size: x-small;">
 						Pagar con <i class="fa fa-cc-paypal fa-2x"></i>
+					</a>
+
+					<a href="" class="btn btn-warning" style="font-weight: bold;font-size: x-small;">
+						Pagar con targeta</i>
+					</a>
+					<a href="" class="btn btn-danger" style="font-weight: bold;font-size: x-small;">
+						simular pago</i>
 					</a>
 				</p>
 			</div>
