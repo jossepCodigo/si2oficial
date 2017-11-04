@@ -156,9 +156,11 @@ class PaypalController extends BaseController
 			// Enviar correo a admin
 			// Redireccionar
 
-			$this->saveOrder(\Session::get('cart'));
+			$this->saveOrder(\Session::get('cart'));//guarda los pedidos en la base de datos
+			
+			
 
-			\Session::forget('cart');
+			\Session::forget('cart'); //limpia el carrito de compras
 
 
 			return \Redirect::route('home')
