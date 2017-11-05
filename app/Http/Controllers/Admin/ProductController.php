@@ -9,6 +9,7 @@ use App\Http\Requests\SaveProductRequest;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Category;
+use App\Stock;
 
 class ProductController extends Controller
 {
@@ -44,9 +45,11 @@ class ProductController extends Controller
      */
     public function store(SaveProductRequest $request)
     {
+        $sl = $request->get('name');
+
         $data = [
             'name'          => $request->get('name'),
-            'slug'          => str_slug($request->get('name')),
+            'slug'          => str_slug($sl),
             'description'   => $request->get('description'),
             'extract'       => $request->get('extract'),
             'price'         => $request->get('price'),
@@ -58,6 +61,20 @@ class ProductController extends Controller
         $product = Product::create($data);
 
         $message = $product ? 'Producto agregado correctamente!' : 'El producto NO pudo agregarse!';
+        
+        if (strcmp ($message , 'Producto agregado correctamente!')==0) {
+            $prd =Product::where('slug',  str_slug($sl))->first();
+            $val = $prd->id;
+            
+            $nuevaS = new Stock;
+            $nuevaS->cantidad = 0;
+            $nuevaS->id_prod = $val;
+            $nuevaS->save();
+
+            $resp=Stock::where('id_prod', $val)->first();
+            //print_r($resp);
+            //die();
+        }
         
         return redirect()->route('admin.product.index')->with('message', $message);
     }
@@ -114,10 +131,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $deleted = $product->delete();
+        $id_prod = $product->id;
+        Stock::where('id_prod', $id_prod)->delete();
         
+        $deleted = $product->delete();   
         $message = $deleted ? 'Producto eliminado correctamente!' : 'El producto NO pudo eliminarse!';
-        
         return redirect()->route('admin.product.index')->with('message', $message);
     }
 }
