@@ -125,14 +125,8 @@ class SimuladoController extends Controller
                 $stock=Stock::where('id_prod', $id_prod)->first();
                 $actual=$stock->cantidad;
                 $nuevo=$actual-$item->quantity;
-                //$stock->cantidad = $nuevo;
-                //$stock->save();
                 $stock=Stock::where('id_prod', $id_prod)->update(array('cantidad' => $nuevo));
-                //print_r($stock);
-                //die();
             }
-            //$products = Product::where('category_id','=',2);
-            //dd($products);
         }
     
     private function saveOrderItem($item, $order_id)
