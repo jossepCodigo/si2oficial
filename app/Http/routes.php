@@ -137,9 +137,12 @@ Route::get('payment/status', array(
 	'uses' => 'PaypalController@getPaymentStatus',
 ));
 
+Route::get('simulado', array(
+	'as' => 'simulado',
+	'uses' => 'SimuladoController@pagado',
+));
+
 //order
-
-
 
 
 // ADMIN -------------
@@ -151,13 +154,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
 		return view('admin.home');
 	});
 
-	Route::resource('category', 'CategoryController');
+	Route::resource('category','CategoryController');
 
-	Route::resource('product', 'ProductController');
+	Route::resource('product','ProductController');
 
-	Route::resource('user', 'UserController');
+	Route::resource('user','UserController');
 
-	Route::resource('copia', 'CopiaController');
+	Route::resource('copia','CopiaController');
 
 	Route::get('orders', [
 		'as' => 'admin.order.index',
@@ -168,18 +171,19 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
 	    'as' => 'admin.order.getItems',
 	    'uses' => 'OrderController@getItems'
 	]);
+
      Route::get('orders/update/{id}', [
 	'as' => 'admin.order.update',
 	'uses' => 'OrderController@update'
-]);
-	Route::get('order/{id}', [
+	]);
+
+	Route::post('order/{id}', [
 	    'as' => 'admin.order.destroy',
 	    'uses' => 'OrderController@destroy'
 	]);
 
-Route::get('show', [
-	'as' => 'show',
-	'uses' => 'OrderController@show'
-]);
+	Route::get('show', [
+		'as' => 'show',
+		'uses' => 'OrderController@show'
+	]);
 });
-
