@@ -26,6 +26,7 @@
                             <th>Extracto</th>
                             <th>Precio</th>
                             <th>Visible</th>
+                            <th>stock</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,6 +51,9 @@
                                 <td>{{ $product->extract }}</td>
                                 <td>Bs.{{ number_format($product->price,2) }}</td>
                                 <td>{{ $product->visible == 1 ? "Si" : "No" }}</td>
+                           <!--         {{ $id = $product->id }}
+                                    {{ $stock = App\Stock::where('id_prod', $id)->first() }}   -->
+                                    <td>{{ $stock->cantidad }}</td>
                             </tr>
                         @endforeach
                     </tbody>
