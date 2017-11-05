@@ -21,6 +21,7 @@ use PayPal\Api\Transaction;
 
 use App\Order;
 use App\OrderItem;
+use App\Stock;
 
 class PaypalController extends BaseController
 {
@@ -156,9 +157,11 @@ class PaypalController extends BaseController
 			// Enviar correo a admin
 			// Redireccionar
 
-			$this->saveOrder(\Session::get('cart'));
+			//$this->actualizarStock(\Session::get('cart'));// 
 
-			\Session::forget('cart');
+			$this->saveOrder(\Session::get('cart'));//guarda los pedidos en la base de datos
+
+			\Session::forget('cart'); //limpia el carrito de compras
 
 
 			return \Redirect::route('home')
@@ -188,8 +191,19 @@ class PaypalController extends BaseController
 	    }
 	}
 
-    
-	
+/*    	private function actualizarStock($cart)
+    	{
+    		dd($cart);
+    		foreach($cart as $item){
+    			$id_prod =$item->id;
+	        	$stock = Stock::where('id_prod', '=', $id_prod);
+
+	        	$actual=$stock->cantidad;
+	        	$nuevo=$actual-$item->quantity;
+	        	$stock->quantity = $nuevo;
+	    	}
+    	}
+*/	
 	private function saveOrderItem($item, $order_id)
 	{
 		OrderItem::create([
@@ -199,10 +213,5 @@ class PaypalController extends BaseController
 			'order_id' => $order_id
 		]);
 	}
-
-
-
-
-
 
 }
