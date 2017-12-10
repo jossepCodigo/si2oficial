@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
@@ -15,6 +14,7 @@ class OrderController extends Controller
     {
         if(!\Session::has('order')) \Session::put('order', array());
     }
+
     public function index()
     {
     	$orders = Order::orderBy('id', 'desc')->paginate(5);
@@ -39,7 +39,9 @@ class OrderController extends Controller
         
         return redirect()->route('admin.order.index')->with('message', $message);
     }
-    public function update($id){
+    
+    public function update($id)
+    {
        $orders =Order::find($id);
         $orders->estado="cancelado";
         $orders->save();

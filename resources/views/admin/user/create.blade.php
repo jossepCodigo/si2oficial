@@ -119,7 +119,6 @@
                             
                             {!! Form::radio('type', 'user', true) !!} User
                             {!! Form::radio('type', 'admin') !!} Admin
-                            {!! Form::radio('type', 'repartidor') !!}Repartidor
 
                         </div>
                         

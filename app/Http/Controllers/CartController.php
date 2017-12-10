@@ -16,16 +16,14 @@ class CartController extends Controller
 	}
 
     // Show cart
-    public function show()
-    {
+    public function show(){
     	$cart = \Session::get('cart');
     	$total = $this->total();
     	return view('store.cart', compact('cart', 'total'));
     }
 
     // Add item
-    public function add(Product $product)
-    {
+    public function add(Product $product){
     	$cart = \Session::get('cart');
     	$product->quantity = 1;
     	$cart[$product->slug] = $product;

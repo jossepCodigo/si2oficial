@@ -8,7 +8,9 @@
 	<link href='http://fonts.googleapis.com/css?family=Poiret+One|Lobster+Two' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="{{ asset('admin/css/main.css') }}">
 </head>
-<body>
+<!-- 
+{{$cf = \Session::get('conf')}}     -->
+<body style="background-color: {{ $cf->colorFondo }};">
 
 	@if(\Session::has('message'))
 		@include('admin.partials.message')

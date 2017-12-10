@@ -18,7 +18,7 @@
                     @if (count($errors) > 0)
                         @include('admin.partials.errors')
                     @endif
-                    
+                     
                     {!! Form::model($category, array('route' => array('admin.category.update', $category))) !!}
 
                         <input type="hidden" name="_method" value="PUT">

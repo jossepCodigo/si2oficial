@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\SaveUserRequest;
 use App\Http\Controllers\Controller;
 use App\User;
-
+use App\Config;
 class UserController extends Controller
 {
     /**
@@ -46,7 +46,7 @@ class UserController extends Controller
             'last_name'     => $request->get('last_name'),
             'email'         => $request->get('email'),
             'user'          => $request->get('user'),
-            'password'      => $request->get('password'),
+            'password'      => bcrypt($request->get('password')),
             'type'          => $request->get('type'),
             'active'        => $request->has('active') ? 1 : 0,
             'address'       => $request->get('address')
@@ -55,7 +55,18 @@ class UserController extends Controller
         $user = User::create($data);
 
         $message = $user ? 'Usuario agregado correctamente!' : 'El usuario NO pudo agregarse!';
-        
+        if (strcmp ($message , 'Usuario agregado correctamente!')==0 
+            && strcmp ($request->get('type') , 'admin')==0) {
+            $uss =User::where('email',  $request->get('email'))->first();
+            $idu = $uss->id;
+            $nuevaConf = new Config;
+            $nuevaConf->idUs = $idu;
+            $nuevaConf->colorEnc = '#D8D8D8';
+            $nuevaConf->colorFondo='#E0F8F7';
+            $nuevaConf->colorPie='#0A0A2A';
+            $nuevaConf->save();
+        }
+
         return redirect()->route('admin.user.index')->with('message', $message);
     }
 

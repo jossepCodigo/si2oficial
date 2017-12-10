@@ -32,7 +32,7 @@
             <div class="col-md-6">
                 <div class="panel">
                     <i class="fa fa-cc-paypal  icon-home"></i>
-                    <a href="{{ route('admin.order.index') }}" class="btn btn-warning btn-block btn-home-admin">PEDIDOS</a>
+                    <a href="{{ route('admin.order.index') }}" class="btn btn-warning btn-block btn-home-admin">VENTAS</a>
                 </div>
             </div> 
             
@@ -45,10 +45,18 @@
                     
             <div class="col-md-6">
                 <div class="panel">
-                    <i class="fa fa-window-restore"></i>
-                    <a href="{{ route('admin.copia.index') }}" class="btn btn-warning btn-block btn-home-admin">COPIA DE SEGURIDAD</a>
+                    <i class="fa fa-th" aria-hidden="true" style="font-size:400%"></i>
+                    <a href="{{ route('admin.config.index') }}" class="btn btn-warning btn-block btn-home-admin">CONFIGURACION DE FUENTE</a>
+                </div>
+            </div>                
+
+            <div class="col-md-6">
+                <div class="panel">
+                    <i class="fa fa-paper-plane" aria-hidden="true" style="font-size:400%"></i>
+                    <a href="{{ route('admin.envio.index') }}" class="btn btn-warning btn-block btn-home-admin">ENVIO</a>
                 </div>
             </div>
+            
         </div>
     </div>
     <hr>

@@ -4,11 +4,8 @@
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
-|
 | Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
-|
 */
 
 Route::bind('product', function($slug){
@@ -20,6 +17,11 @@ Route::bind('category', function($category){
     return App\Category::find($category);
 });
 
+// Category dependency injection
+Route::bind('id', function($id){
+    return App\Faq::find($id);
+});
+
 // User dependency injection
 Route::bind('user', function($user){
     return App\User::find($user);
@@ -29,6 +31,9 @@ Route::bind('order', function($order){
     return App\Order::find($order);
 });
 
+Route::bind('descuento', function($order){
+    return App\Descuento::find($order);
+});
 
 Route::get('/', [
 	'as' => 'home',
@@ -142,17 +147,21 @@ Route::get('simulado', array(
 	'uses' => 'SimuladoController@pagado',
 ));
 
-//order
-
+Route::get('faqs', array(
+	'as' => 'faqs',
+	'uses' => 'admin\FaqController@index1',
+));
 
 // ADMIN -------------
+//Route::post('admin/config/modificarE', 'ConfigController@modificarE');
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'admin'], function()
 {
+	Route::get('home/{id}', 'HomeController@index');
 
-	Route::get('home', function(){
-		return view('admin.home');
-	});
+	Route::resource('bitacora','BitacoraController');
+	
+	Route::resource('faq','FaqController');
 
 	Route::resource('category','CategoryController');
 
@@ -160,7 +169,24 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth'], 'prefix' => 'adm
 
 	Route::resource('user','UserController');
 
-	Route::resource('copia','CopiaController');
+	//Route::resource('config','ConfigController');
+	Route::post('config/modificarE','ConfigController@modificarE');
+
+	Route::post('envio/modificarE','EnvioController@modificarE');
+
+	Route::get('config', [
+		'as' => 'admin.config.index',
+		'uses' => 'ConfigController@index'
+	]);
+
+	Route::post('config/modificarF','ConfigController@modificarF');	
+
+	Route::get('envio', [
+		'as' => 'admin.envio.index',
+		'uses' => 'EnvioController@index'
+	]);
+
+	Route::post('config/modificarP','ConfigController@modificarP');
 
 	Route::get('orders', [
 		'as' => 'admin.order.index',

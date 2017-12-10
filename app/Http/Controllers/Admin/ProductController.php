@@ -57,7 +57,7 @@ class ProductController extends Controller
             'visible'       => $request->has('visible') ? 1 : 0,
             'category_id'   => $request->get('category_id')
         ];
-
+ 
         $product = Product::create($data);
 
         $message = $product ? 'Producto agregado correctamente!' : 'El producto NO pudo agregarse!';
@@ -65,7 +65,8 @@ class ProductController extends Controller
         if (strcmp ($message , 'Producto agregado correctamente!')==0) {
             $prd =Product::where('slug',  str_slug($sl))->first();
             $val = $prd->id;
-            
+            print_r($val);
+            die();
             $nuevaS = new Stock;
             $nuevaS->cantidad = 0;
             $nuevaS->id_prod = $val;

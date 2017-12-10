@@ -22,6 +22,7 @@ use PayPal\Api\Transaction;
 use App\Order;
 use App\OrderItem;
 use App\Stock;
+use App\Envio;
 
 class PaypalController extends BaseController
 {
@@ -150,17 +151,11 @@ class PaypalController extends BaseController
 		//echo '<pre>';print_r($result);echo '</pre>';exit; // DEBUG RESULT, remove it later
 
 		if ($result->getState() == 'approved') { // payment made
-			// Registrar el pedido --- ok
-			// Registrar el Detalle del pedido  --- ok
-			// Eliminar carrito 
-			// Enviar correo a user
-			// Enviar correo a admin
-			// Redireccionar
 
 			//$this->actualizarStock(\Session::get('cart'));// 
 
 			$this->saveOrder(\Session::get('cart'));//guarda los pedidos en la base de datos
-
+			$this->actualizarStock(\Session::get('cart'));
 			\Session::forget('cart'); //limpia el carrito de compras
 
 
@@ -169,6 +164,14 @@ class PaypalController extends BaseController
 		}
 		return \Redirect::route('home')
 			->with('message', 'La compra fue cancelada');
+	}
+
+	private function crearEnvio($idVenta){
+		$newEnv = new Envio;
+            $newEnv->idVenta  = $idVenta;
+            $newEnv->fechaEnvio = '01/01/2017';
+            $newEnv->estado = 'por enviar';
+            $newEnv->save();
 	}
 
 
@@ -189,21 +192,21 @@ class PaypalController extends BaseController
 	    foreach($cart as $item){
 	        $this->saveOrderItem($item, $order->id);
 	    }
+
+	    $this->crearEnvio($order->id);
 	}
 
-/*    	private function actualizarStock($cart)
-    	{
-    		dd($cart);
-    		foreach($cart as $item){
-    			$id_prod =$item->id;
-	        	$stock = Stock::where('id_prod', '=', $id_prod);
+	private function actualizarStock($cart)
+       {
+            foreach($cart as $item){
+                $id_prod =$item->id;
+                $stock=Stock::where('id_prod', $id_prod)->first();
+                $actual=$stock->cantidad;
+                $nuevo=$actual-$item->quantity;
+                $stock=Stock::where('id_prod', $id_prod)->update(array('cantidad' => $nuevo));
+            }
+       }
 
-	        	$actual=$stock->cantidad;
-	        	$nuevo=$actual-$item->quantity;
-	        	$stock->quantity = $nuevo;
-	    	}
-    	}
-*/	
 	private function saveOrderItem($item, $order_id)
 	{
 		OrderItem::create([
@@ -213,5 +216,4 @@ class PaypalController extends BaseController
 			'order_id' => $order_id
 		]);
 	}
-
 }

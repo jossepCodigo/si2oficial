@@ -55,9 +55,7 @@
 						Pagar con <i class="fa fa-cc-paypal fa-2x"></i>
 					</a>
 
-					<a href="" class="btn btn-warning" style="font-weight: bold;font-size: x-small;">
-						Pagar con targeta</i>
-					</a>
+				
 					<a href="{{ route('simulado') }}" class="btn btn-danger" style="font-weight: bold;font-size: x-small;">
 						simular pago</i>
 					</a>

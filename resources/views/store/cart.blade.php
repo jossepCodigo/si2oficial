@@ -23,6 +23,7 @@
 							<th>Producto</th>
 							<th>Precio</th>
 							<th>Cantidad</th>
+							<th>Descuento</th>
 							<th>Subtotal</th>
 							<th>Quitar</th>
 						</tr>
@@ -50,6 +51,20 @@
 										<i class="fa fa-refresh"></i>
 									</a>
 								</td>
+								<td>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+										
+										<span class="caret"></span>
+										</a>
+										<ul class="dropdown-menu" role="menu">
+
+										<li><a href=""></a></li>
+
+										</ul>
+									</li>
+								</td>
+								<!-- colcar descuentos -->
 								<td>Bs.{{ number_format($item->price * $item->quantity,2) }}</td>
 								<td>
 									<a href="{{ route('cart-delete', $item->slug) }}" class="btn btn-danger">
@@ -66,7 +81,6 @@
 						Total: Bs.{{ number_format($total,2) }}
 					</span>
 				</h3>
-
 			</div>
 			@else
 				<h3><span class="label label-warning">No hay productos en el carrito :(</span></h3>

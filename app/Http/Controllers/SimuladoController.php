@@ -109,7 +109,7 @@ class SimuladoController extends Controller
         $order = Order::create([
             'subtotal' => $subtotal,
             'shipping' => 20,
-            'estado'=>"no cancelado",
+            'estado'=>"no enviado",
             'user_id' => \Auth::user()->id
         ]);
         

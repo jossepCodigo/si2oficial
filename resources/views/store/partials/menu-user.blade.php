@@ -4,6 +4,11 @@
 			<i class="fa fa-user"></i> <font size=5>{{ Auth::user()->user }} </font><span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu" role="menu">
+		<!-- {{ $idd = Auth::user()->id }}
+      					-->
+			<?php if (strcmp(Auth::user()->type,'admin')==0 ): ?>
+				<li><a href="{{ url('/admin/home/'.$idd) }}">administrador</a></li>
+			<?php endif ?>
 			<li><a href="{{ route('logout') }}">Finalizar sesión</a></li>
 		</ul>
 	</li>

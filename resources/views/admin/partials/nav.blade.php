@@ -1,5 +1,11 @@
-<nav class="navbar navbar-default">
+<!-- 
+{{$cf = \Session::get('conf')}}     -->
+
+<nav class="navbar navbar-default" style="background-color: {{ $cf->colorEnc }};">
   <div class="container-fluid">
+  <!-- 
+      {{ $idd = Auth::user()->id }}
+      -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
@@ -7,7 +13,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      {!! link_to('admin/home', "e-commerce", $attributes = array('class' => 'navbar-brand main-title')) !!}
+      <a href="{{ url('/admin/home/'.$idd) }}" class="btn btn-warning">ecommerce</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -15,7 +21,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ route('admin.category.index') }}">Categorias</a></li>
         <li><a href="{{ route('admin.product.index') }}">Productos</a></li>
-        <li><a href="{{ route('admin.order.index') }}">Pedidos</a></li>
+        <li><a href="{{ route('admin.order.index') }}">Ventas</a></li>
         <li><a href="{{ route('admin.user.index') }}">Usuarios</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
